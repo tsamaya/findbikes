@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Trouver un vélo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Les styles -->
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css">
+    <!-- ArcGIS API for JS -->
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/dojo/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/css/esri.css">
+    <!-- ArcGIS API for JS -->
+    <link rel="stylesheet" type="text/css" href="./css/findbikes.css">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="./js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="./ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="./ico/favicon.png">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <p><b>Trouver un vélo</b></p>
+            <p>est une petite application utilisant l'API OpenData de JCDecaux et l'API ArcGIS for Javascript d'ESRI.</p>
+            <p>Sélectionner une ville puis zoomer sur votre emplacement pour trouver une station de vélo.</p>
+            <p>Vous avez aussi la possiblité de saisir une adresse pour vous localiser sur la carte.</p>
+          </div><!--/.well -->
+          <div class="well sidebar-nav">
+            <div>Ville</div>
+            <select id="contractsList" onchange="selectContract(this.selectedIndex);"></select>
+            <div>Se rapprocher</div>
+            <div id="search"></div>
+            <div id="results"><i>ex : rue Simon Maupin 69002 Lyon</i></div>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">      
+          <div class="row-fluid">
+            <div id="map">
+            </div><!--/map-->
+          </div><!--/row-->
+        </div><!--/span-->
+      </div><!--/row-->
+      <hr>
+      <footer>
+        <p><a href="https://developer.jcdecaux.com/" target="_blank">Vélos en libre-service JCDecaux</a>&nbsp;à l'aide d'<a href="http://help.arcgis.com/en/webapi/javascript/arcgis/jshelp/" _target="blank">ArcGIS API for JavaScript</a>,&nbsp;par Arnaud Ferrand.&nbsp;Made in Grenoble, France en 2013</p>
+      </footer>
+    </div><!--/.fluid-container-->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <!--<script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5compact"></script>-->
+    <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/"></script>
+    <script src="./js/findbikes.js"></script>
+  </body>
+</html>
