@@ -1,5 +1,5 @@
-FindBikes
-==============
+# FindBikes
+### Welcome to findBikes with ArcGIS ! 
 
 This application is using these API :
 * [API ArcGIS for Javascript](https://developer.JCDecaux.com/#/opendata/), for the map ;
