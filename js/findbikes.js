@@ -150,4 +150,51 @@ function onClick(evt) {
 	}
 }
 
+function locateDevice() {
+	if (navigator.geolocation) {
+		//$.mobile.showPageLoadingMsg();	
+		navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
+		navigator.geolocation.watchPosition(showLocation, locationError);
+	} else {
+		alert("Current location is not available");
+	}
+}
+
+function zoomToLocation(position) {
+	//$.mobile.hidePageLoadingMsg(); //true hides the dialog
+	var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(position.coords.longitude, position.coords.latitude));
+	map.centerAndZoom(pt, 13);
+	//uncomment to add a graphic at the current location
+	var symbol = new esri.symbol.PictureMarkerSymbol("./img/bluedot.png",40,40);
+	map.graphics.add(new esri.Graphic(pt,symbol));
+}
+
+function showLocation(location) {
+	if (location.coords.accuracy <= 500) {
+	 // the reading is accurate, do something
+		var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(position.coords.longitude, position.coords.latitude));
+		map.centerAndZoom(pt, 13);
+	} else {
+	 // reading is not accurate enough, do something else
+	 // maybe nothing !
+	}
+}
+
+function locationError(error) {
+	switch (error.code) {
+		case error.PERMISSION_DENIED:
+			alert("Location not provided");
+			break;
+		case error.POSITION_UNAVAILABLE:
+			alert("Current location not available");
+			break;
+		case error.TIMEOUT:
+			alert("Timeout");
+			break;
+		default:
+			alert("unknown error");
+			break;
+	}
+}
+
 dojo.ready(init);

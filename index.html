@@ -39,7 +39,10 @@
           <div class="well sidebar-nav">
             <div>Ville</div>
             <select id="contractsList" onchange="selectContract(this.selectedIndex);"></select>
-            <div>Se rapprocher</div>
+            <hr />
+            <div>Localisation auto <img src="./img/whereami.png" border="0" width="24" height="24" alt="se localiser" onclick="locateDevice();"></div>
+            <br />
+            <div>Chercher une adresse</div>
             <div id="search"></div>
             <div id="results"><i>ex : rue Simon Maupin 69002 Lyon</i></div>
           </div><!--/.well -->
@@ -53,7 +56,7 @@
       </div><!--/row-->
       <hr>
       <footer>
-        <p><a href="https://developer.jcdecaux.com/" target="_blank">Vélos en libre-service JCDecaux</a>&nbsp;à l'aide d'<a href="http://help.arcgis.com/en/webapi/javascript/arcgis/jshelp/" _target="blank">ArcGIS API for JavaScript</a>,&nbsp;par Arnaud Ferrand.&nbsp;Made in Grenoble, France en 2013</p>
+        <p><a href="https://developer.jcdecaux.com/" target="_blank">Vélos en libre-service JCDecaux</a>&nbsp;à l'aide d'<a href="http://help.arcgis.com/en/webapi/javascript/arcgis/jshelp/" _target="blank">ArcGIS API for JavaScript</a>.&nbsp;Made in Grenoble, France en 2013</p>
       </footer>
     </div><!--/.fluid-container-->
     <!-- Le javascript
