@@ -172,7 +172,7 @@ function zoomToLocation(position) {
 function showLocation(location) {
 	if (location.coords.accuracy <= 500) {
 	 // the reading is accurate, do something
-		var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(position.coords.longitude, position.coords.latitude));
+		var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(location.coords.longitude, location.coords.latitude));
 		map.centerAndZoom(pt, 13);
 	} else {
 	 // reading is not accurate enough, do something else
