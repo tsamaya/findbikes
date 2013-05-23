@@ -25,7 +25,7 @@ Get a key at [JCDecaux](https://developer.JCDecaux.com/) and set it in the file 
 ## History
 
 * 0.2 - May 23, 2013 - Adding location 
-* 0.1 - May 21, 2013 - Creation
+* 0.1 - May 22, 2013 - Creation
 
 
 ## Resources
@@ -35,8 +35,8 @@ Get a key at [JCDecaux](https://developer.JCDecaux.com/) and set it in the file 
 
 ## Licensing
 
-(CC BY-SA)[http://creativecommons.org/licenses/by-sa/3.0/]
+[CC BY-SA](http://creativecommons.org/licenses/by-sa/3.0/)
 
 ## About Me
-See more at (About.me)[http://about.me/arnaudferrand]
+See more at [About.me](http://about.me/arnaudferrand)
 
