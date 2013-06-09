@@ -1,6 +1,6 @@
 var contracts_url = "./contracts.php";
 var stations_url = "./stations.php?contract="
-var map, symbol, locator, handle ; 
+var map, symbol, locator, handle, deviceGraphic, devicePt, watchId, shareLocation ;
 
 dojo.require("esri.map");
 dojo.require("esri.symbol");
@@ -141,23 +141,38 @@ function onClick(evt) {
 	if(null != evt.graphic.attributes) {
 		var station = evt.graphic.attributes;
  		map.infoWindow.setTitle("<b>"+station.name+"</b>");
+ 		var dateMaj = new Date(station.last_update);
 		map.infoWindow.setContent("<b>"+station.address+"</b>"+
 								  "<br />Statut : "+station.status+
 								  "<br />points d'attache opérationnels : "+station.bike_stands+
 								  "<br />nombre de points d'attache disponibles : "+station.available_bike_stands+
-								  "<br />nombre de vélos disponibles : "+station.available_bikes);
+								  "<br />nombre de vélos disponibles : "+station.available_bikes+
+								  "<br />CB : "+station.banking+
+								  "<br /><i>Mise à jour : "+ dateMaj.toLocaleDateString()+" "+dateMaj.toLocaleTimeString()+
+								  "</i>");
 		map.infoWindow.show(evt.screenPoint, map.getInfoWindowAnchor(evt.screenPoint));
 	}
 }
 
 function locateDevice() {
-	if (navigator.geolocation) {
-		//$.mobile.showPageLoadingMsg();	
-		navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
-		navigator.geolocation.watchPosition(showLocation, locationError);
+	if( !shareLocation) {			
+		if (navigator.geolocation) {
+			//$.mobile.showPageLoadingMsg();	
+			//navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
+			watchId = navigator.geolocation.watchPosition(showLocation, locationError);
+			shareLocation = true;
+		} else {
+			alert("Current location is not available");
+		}
+		// TODO: swapimage()
 	} else {
-		alert("Current location is not available");
+		navigator.geolocation.clearWatch(watchId);
+		shareLocation = false;
+		// TODO: swapimage()
+		map.graphics.remove(deviceGraphic);
+		map.refresh();
 	}
+	//alert(shareLocation);
 }
 
 function zoomToLocation(position) {
@@ -166,14 +181,22 @@ function zoomToLocation(position) {
 	map.centerAndZoom(pt, 13);
 	//uncomment to add a graphic at the current location
 	var symbol = new esri.symbol.PictureMarkerSymbol("./img/bluedot.png",40,40);
-	map.graphics.add(new esri.Graphic(pt,symbol));
+	deviceGraphic = new esri.Graphic(pt,symbol);
+	map.graphics.add(deviceGraphic);
+
 }
 
 function showLocation(location) {
 	if (location.coords.accuracy <= 500) {
-	 // the reading is accurate, do something
+	 	// the reading is accurate, do something
+		if( devicePt ) {
+			map.graphics.remove(devicePt);
+		}	
 		var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(location.coords.longitude, location.coords.latitude));
-		map.centerAndZoom(pt, 13);
+	    map.centerAt(pt);
+		var symbol = new esri.symbol.PictureMarkerSymbol("./img/bluedot.png",40,40);
+		deviceGraphic = new esri.Graphic(pt,symbol);
+		map.graphics.add(deviceGraphic);
 	} else {
 	 // reading is not accurate enough, do something else
 	 // maybe nothing !
