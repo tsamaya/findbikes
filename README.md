@@ -23,6 +23,7 @@ Get a key at [JCDecaux](https://developer.JCDecaux.com/) and set it in the file 
 
 ## History
 
+* 0.4 - Oct 17, 2013 - Using ESRI JS API 3.7, selecting a contract zoom to the GraphicsLayer
 * 0.3 - Jun 16, 2013 - GPS tracking (on/off) 
 * 0.2 - May 23, 2013 - Adding location 
 * 0.1 - May 22, 2013 - Creation
