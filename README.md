@@ -3,7 +3,6 @@
 
 This application will help you to find a JCDecaux self-service bike (to pick and park).
 
-
 ## Installation:
 * Clone or download this repository
 * Configure the JCDDecaux API Key.
@@ -24,6 +23,7 @@ Get a key at [JCDecaux](https://developer.JCDecaux.com/) and set it in the file 
 
 ## History
 
+* 0.3 - Jun 16, 2013 - GPS tracking (on/off) 
 * 0.2 - May 23, 2013 - Adding location 
 * 0.1 - May 22, 2013 - Creation
 

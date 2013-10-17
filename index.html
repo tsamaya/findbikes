@@ -2,17 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Trouver des vélos</title>
+    <title>Trouver un vélo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Utilisation des API ArcGIS for Javascript d'ESRI et open data de JCDecaux">
-    <meta name="author" content="tsamaya">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
     <!-- Les styles -->
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css">
     <!-- ArcGIS API for JS -->
-    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/dojo/dijit/themes/claro/claro.css">
-    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/css/esri.css">
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.7/js/dojo/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.7/js/esri/css/esri.css">
     <!-- ArcGIS API for JS -->
     <link rel="stylesheet" type="text/css" href="./css/findbikes.css">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -36,14 +36,13 @@
             <p>Cette application utilise l'API OpenData de JCDecaux et l'API ArcGIS for Javascript d'ESRI.</p>
             <p>Pour trouver une station de vélo, sélectionner une ville de la liste, puis zoomer sur votre emplacement ou utiliser la localisation de votre équipement mobile.</p>
             <p>Vous avez aussi la possiblité de saisir une adresse pour vous localiser sur la carte.</p>
-            <p align="right"><a href="#">Masquer</a></p>
           </div><!--/.well -->
           <div class="well sidebar-nav">
             <div>Ville</div>
             <select id="contractsList" onchange="selectContract(this.selectedIndex);"></select>
             <hr />
-            <!--<div>Localisation auto <img src="./img/whereami.png" border="0" width="24" height="24" alt="se localiser" onclick="locateDevice();"></div>
-            <br />-->
+            <div>Localisation auto <img src="./img/whereami.png" border="0" width="24" height="24" alt="se localiser" onclick="locateDevice();"></div>
+            <br />
             <div>Chercher une adresse</div>
             <div id="search"></div>
             <div id="results"><i>ex : rue Simon Maupin 69002 Lyon</i></div>
@@ -52,7 +51,6 @@
         <div class="span9">      
           <div class="row-fluid">
             <div id="map">
-              <div><img src="./img/whereami_off.png" border="0" width="24" height="23" alt="se localiser" onclick="locateDevice();"></div>
             </div><!--/map-->
           </div><!--/row-->
         </div><!--/span-->
@@ -68,7 +66,7 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="./js/bootstrap.js"></script>
     <!--<script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5compact"></script>-->
-    <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/"></script>
+    <script src="//js.arcgis.com/3.7/"></script>
     <script src="./js/findbikes.js"></script>
   </body>
 </html>
