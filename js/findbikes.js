@@ -14,7 +14,7 @@ dojo.require("esri.dijit.Geocoder");
 dojo.require("esri.InfoTemplate");
 dojo.require("esri.dijit.InfoWindowLite");
 dojo.require("esri.layers.GraphicsLayer");
-
+dojo.require("dojo.date.locale");
 /**
  * Init map, geocoder, locator, et JDDecaux contracts dropdown box
  */
@@ -57,15 +57,16 @@ function init() {
 	map.setInfoWindow(infoWindowLite);
 
 	var template = new esri.InfoTemplate();
-    template.setTitle("<b>${name}</b>");
-    template.setContent("<b>${address}</b>" +
-			"<br />Statut : ${status}" +
-			"<br />points d'attache opérationnels : ${bike_stands}" +
-			"<br />nombre de points d'attache disponibles : ${available_bike_stands}" +
-			"<br />nombre de vélos disponibles : ${available_bikes}" +
-			"<br />CB : ${banking}" +			
-			"</i>");
-	//"<br /><i>Mise à jour : " + dateMaj.toLocaleDateString() + " " + dateMaj.toLocaleTimeString() +
+	template.setTitle("<b>${name}</b>");
+	template.setContent("<b>${address}</b>" +
+		"<br />Statut : ${status}" +
+		"<br />points d'attache opérationnels : ${bike_stands}" +
+		"<br />nombre de points d'attache disponibles : ${available_bike_stands}" +
+		"<br />nombre de vélos disponibles : ${available_bikes}" +
+		"<br />CB : ${banking}" +
+		"<br /><i>Mise à jour : ${last_update:DateFormat}</i>"
+	);
+
 
 	// Create graphic layer
 	stationsGraphicLayer = new esri.layers.GraphicsLayer();
@@ -80,6 +81,11 @@ function init() {
 	dojo.connect(map, "onLoad", function() {
 
 	});
+}
+
+function formatDate(value, key, data) {
+	var dateMaj = new Date(data.last_update);
+	return dateMaj.toLocaleDateString() + " " + dateMaj.toLocaleTimeString();
 }
 
 /**
