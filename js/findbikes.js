@@ -234,23 +234,33 @@ function locateDevice() {
 			//navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
 			// start watching position
 			watchId = navigator.geolocation.watchPosition(showLocation, locationError);
-			shareLocation = true;
 			// swap image source
-			this.src = this.src == offImg ? onImg : offImg;
+			swapImageGeolocation();
+			shareLocation = true;
 		} else {
 			alert("Current location is not available");
 		}
 	} else {
 		// stop watching position
 		navigator.geolocation.clearWatch(watchId);
-		shareLocation = false;
 		// swap image source
-		this.src = this.src == offImg ? onImg : offImg;
+		swapImageGeolocation();
 		// remove graphic
 		map.graphics.remove(deviceGraphic);
-		map.refresh();
+		shareLocation = false;
+		//map.refresh();
 	}
-	//alert(shareLocation);
+	console.log("shareLocation "+shareLocation);
+}
+
+function swapImageGeolocation() {
+	var img = document.getElementById("locateimage");
+	if( shareLocation) {
+		img.src = offImg;
+	} else {
+		img.src = onImg;
+	}
+	//img.src = img.src == offImg ? onImg : offImg;
 }
 
 /**
@@ -273,7 +283,7 @@ function zoomToLocation(position) {
  */
 
 function showLocation(location) {
-	if (location.coords.accuracy <= 500) {
+	if (location.coords.accuracy <= 25000) {
 		// the reading is accurate, do something
 		if (devicePt) {
 			map.graphics.remove(devicePt);
