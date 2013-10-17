@@ -198,7 +198,6 @@ function getStations(contractName) {
 		//handle = dojo.connect(map.graphics, "onClick", onClick);
 		//handle = dojo.connect(stationsGraphicLayer.graphics, "onClick", onClick);
 	});
-
 }
 
 /**
