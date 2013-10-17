@@ -5,14 +5,15 @@ var map, symbol, handle, deviceGraphic, devicePt, watchId, shareLocation, statio
 var onImg = "./img/whereami_on.png";
 var offImg = "./img/whereami_off.png";
 
+dojo.require("esri");
 dojo.require("esri.map");
 dojo.require("esri.symbol");
 dojo.require("esri.graphic");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Geocoder");
+dojo.require("esri.InfoTemplate");
 dojo.require("esri.dijit.InfoWindowLite");
 dojo.require("esri.layers.GraphicsLayer");
-dojo.require("esri");
 
 /**
  * Init map, geocoder, locator, et JDDecaux contracts dropdown box
@@ -55,8 +56,20 @@ function init() {
 	infoWindowLite.startup();
 	map.setInfoWindow(infoWindowLite);
 
+	var template = new esri.InfoTemplate();
+    template.setTitle("<b>${name}</b>");
+    template.setContent("<b>${address}</b>" +
+			"<br />Statut : ${status}" +
+			"<br />points d'attache opérationnels : ${bike_stands}" +
+			"<br />nombre de points d'attache disponibles : ${available_bike_stands}" +
+			"<br />nombre de vélos disponibles : ${available_bikes}" +
+			"<br />CB : ${banking}" +			
+			"</i>");
+	//"<br /><i>Mise à jour : " + dateMaj.toLocaleDateString() + " " + dateMaj.toLocaleTimeString() +
+
 	// Create graphic layer
 	stationsGraphicLayer = new esri.layers.GraphicsLayer();
+	stationsGraphicLayer.infoTemplate = template;
 	map.addLayer(stationsGraphicLayer);
 	//stationsGraphicLayer.setInfoWindow(infoWindowLite);
 
@@ -176,16 +189,19 @@ function getStations(contractName) {
 		console.log("error loading stations");
 	}).always(function() {
 		console.log("loading stations : finished!");
+		//handle = dojo.connect(map.graphics, "onClick", onClick);
+		//handle = dojo.connect(stationsGraphicLayer.graphics, "onClick", onClick);
 	});
 
-	handle = dojo.connect(map.graphics, "onClick", onClick);
 }
 
 /**
  * station : on click
+ * @deprecated
  */
 
 function onClick(evt) {
+	console.log('click' + evt);
 	if (null != evt.graphic.attributes) {
 		var station = evt.graphic.attributes;
 		map.infoWindow.setTitle("<b>" + station.name + "</b>");
