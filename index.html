@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Trouver un vélo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,48 +26,75 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="./ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="/ico/favicon.png">
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <p><b>Trouver des vélos</b></p>
-            <p>est une application pour trouver une station pour prendre ou rendre des <a href="http://www.cyclocity.com/" target="_blank">vélos JCDecaux</a>, dans les villes équipées.</p>
-            <p>Cette application utilise l'API OpenData de JCDecaux et l'API ArcGIS for Javascript d'ESRI.</p>
-            <p>Pour trouver une station de vélo, sélectionner une ville de la liste, puis zoomer sur votre emplacement ou utiliser la localisation de votre équipement mobile.</p>
-            <p>Vous avez aussi la possiblité de saisir une adresse pour vous localiser sur la carte.</p>
-          </div><!--/.well -->
-          <div class="well sidebar-nav">
-            <div>Ville</div>
-            <select id="contractsList" onchange="selectContract(this.selectedIndex);"></select>
-            <hr />
-            <div>Localisation auto <img id="locateimage" src="./img/whereami_off.png" border="0" width="24" height="24" alt="se localiser" onclick="locateDevice();"></div>
-            <br />
-            <div>Chercher une adresse</div>
-            <div id="search"></div>
-            <div id="results"><i>ex : rue Simon Maupin 69002 Lyon</i></div>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">      
-          <div class="row-fluid">
-            <div id="map">
-            </div><!--/map-->
-          </div><!--/row-->
-        </div><!--/span-->
-      </div><!--/row-->
-      <hr>
-      <footer>
-        <p><a href="https://developer.jcdecaux.com/" target="_blank">Vélos en libre-service JCDecaux</a>&nbsp;à l'aide d'<a href="http://js.arcgis.com/" _target="blank">ArcGIS API for JavaScript</a>.&nbsp;Made in Grenoble, France en 2013</p>
-      </footer>
-    </div><!--/.fluid-container-->
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <p><b>Trouver des vélos</b>
+                    </p>
+                    <p>est une application pour trouver une station pour prendre ou rendre des <a href="http://www.cyclocity.com/" target="_blank">vélos JCDecaux</a>, dans les villes équipées.</p>
+                    <p>Cette application utilise l'API OpenData de JCDecaux et l'API ArcGIS for Javascript d'ESRI.</p>
+                    <p>Pour trouver une station de vélo, sélectionner une ville de la liste, puis zoomer sur votre emplacement ou utiliser la localisation de votre équipement mobile.</p>
+                    <p>Vous avez aussi la possiblité de saisir une adresse pour vous localiser sur la carte.</p>
+                </div>
+                <!--/.well -->
+                <div class="well sidebar-nav">
+                    <div>Ville</div>
+                    <select id="contractsList" ></select>
+                    <hr />
+                    <div>Localisation auto
+                        <img id="locateimage" src="./img/whereami_off.png" border="0" width="24" height="24" alt="se localiser">
+                    </div>
+                    <br />
+                    <div>Chercher une adresse</div>
+                    <div id="search"></div>
+                    <div id="results"><i>ex : rue Simon Maupin 69002 Lyon</i>
+                    </div>
+                </div>
+                <!--/.well -->
+            </div>
+            <!--/span-->
+            <div class="span9">
+                <div class="row-fluid">
+                    <div id="map">
+                    </div>
+                    <!--/map-->
+                </div>
+                <!--/row-->
+            </div>
+            <!--/span-->
+        </div>
+        <!--/row-->
+        <hr>
+        <footer>
+            <p><a href="https://developer.jcdecaux.com/" target="_blank">Vélos en libre-service JCDecaux</a>&nbsp;à l'aide d'<a href="http://js.arcgis.com/" _target="blank">ArcGIS API for JavaScript</a>.&nbsp;Made in Grenoble, France en 2013</p>
+        </footer>
+    </div>
+    <!--/.fluid-container-->
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="./js/bootstrap.js"></script>
+    <script type="text/javascript">
+    var dojoConfig = {
+        async: true,
+        packages: [{
+            name: "app",
+            location: location.pathname.replace(/[^\/]+$/, '') + "js"
+        }]
+    };
+    </script>
     <script src="//js.arcgis.com/3.7/"></script>
-    <script src="./js/findbikes.js"></script>
+    <!--<script src="./js/findbikes.js"></script>-->
+    <script type="text/javascript">
+    require(["app/findbikes"], function(findbikes) {
+        findbikes.startup();
+    });
+    </script>
+</body>
 
-  </body>
 </html>
