@@ -89,13 +89,13 @@ define(["esri/map",
                     autoComplete: true,
                     map: map
                 }, dom.byId("search"));
-                //geocoder.startup();
 
                 geocoder.on("select", showGeocoderLocation);
                 geocoder.on("clear", removeGeocoderLocation);
 
                 // create the info window
                 var infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));
+                infoWindow.startup();
                 map.setInfoWindow(infoWindow);
 
                 // with this template
@@ -109,12 +109,12 @@ define(["esri/map",
                     "<br />CB : ${banking}" +
                     "<br /><i>Mise à jour : ${last_update:DateFormat}</i>"
                 );
+
                 // Create graphics layer
                 stationsGraphicLayer = new GraphicsLayer();
                 stationsGraphicLayer.infoTemplate = template;
                 map.addLayer(stationsGraphicLayer);
-
-                infoWindow.startup();
+                
                 map.infoWindow.resize(300, 200);
 
                 function showGeocoderLocation(evt) {
@@ -165,7 +165,8 @@ define(["esri/map",
              * fired when a contract is selected
              */
             selectContract: function(evt) {
-                var contractIdx = evt.srcElement.selectedIndex;
+                //var contractIdx = evt.srcElement.selectedIndex;
+                var contractIdx = evt.currentTarget.selectedIndex;
                 console.log("param est " + contractIdx);
                 var x = dom.byId("contractsList");
                 var contractName = x.options[contractIdx].value;
