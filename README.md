@@ -20,6 +20,8 @@ Get a key at [JCDecaux](https://developer.JCDecaux.com/) and set it in the file 
 	$api_key="xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 ?>
 ```
+## demo
+Try it : [Findbikes](http://gis.tsamaya.net/findbikes/).
 
 ## History
 
