@@ -22,33 +22,13 @@ body {
   margin: 0;
   padding: 0;*/
 }
-.close {
-    opacity:0.8 !important;
-}
-#resScroll {
-    height: 200px !important;
-    overflow: auto;
-}
-#resultsTable {
-    height: 200px !important;
-    overflow: auto;
-}
-.fill {
-    min-height: 100%;
-    height: 100%;
-}
-.scrollable {
-    overflow: scroll;
-}
-.loc {
-    margin-top : 5px;
-}
 .well {
     padding:9px;
 }
-.simpleGeocoder .esriGeocoder input {
+/*.simpleGeocoder .esriGeocoder input {
     width:136px;
 }
 .simpleGeocoder .esriGeocoderContainer {
     width:200px;
 }
+*/

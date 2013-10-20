@@ -17,9 +17,12 @@ define(["esri/map",
         "esri/graphicsUtils",
         "esri/geometry/webMercatorUtils",
         "esri/geometry/Point",
+        "esri/graphic",
+        "esri/symbols/SimpleMarkerSymbol",
         "dojo/dom",
         'dojo/on',
         "dojo/dom-construct",
+        "dojo/_base/Color",
         "dojo/domReady!"
     ],
     function(Map,
@@ -33,9 +36,12 @@ define(["esri/map",
         graphicsUtils,
         webMercatorUtils,
         Point,
+        Graphic,
+        SimpleMarkerSymbol,
         dom,
         on,
-        domConstruct) {
+        domConstruct,
+        Color) {
         return {
 
             /**
@@ -45,21 +51,21 @@ define(["esri/map",
                 // init map
                 this.initMap();
                 // init data
-
                 this.getContracts();
                 // setup UX
                 this.initView();
             },
 
             /**
-             * creates ESRI map and other esri compenents
+             * creates ESRI map and other esri components
              */
             initMap: function() {
                 // create the station symbol
+                //"url": "img/velov.gif",
                 symbol = new PictureMarkerSymbol({
                     "angle": 0,
                     "type": "esriPMS",
-                    "url": "img/velov.gif",
+                    "url": "img/pin.png",
                     "contentType": "image/gif",
                     "width": 25,
                     "height": 23,
@@ -76,14 +82,20 @@ define(["esri/map",
                 });
 
                 // create the geocoder
-                geocoder = new Geocoder({
+                var geocoder = new Geocoder({
+                    arcgisGeocoder: {
+                        placeholder: "Find a place"
+                    },
+                    autoComplete: true,
                     map: map
-                }, "search");
-                geocoder.startup();
+                }, dom.byId("search"));
+                //geocoder.startup();
+
+                geocoder.on("select", showGeocoderLocation);
+                geocoder.on("clear", removeGeocoderLocation);
 
                 // create the info window
                 var infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));
-                infoWindow.startup();
                 map.setInfoWindow(infoWindow);
 
                 // with this template
@@ -91,9 +103,9 @@ define(["esri/map",
                 template.setTitle("<b>${name}</b>");
                 template.setContent("<b>${address}</b>" +
                     "<br />Statut : ${status}" +
-                    "<br />points opérationnels : ${bike_stands}" +
-                    "<br />points disponibles : ${available_bike_stands}" +
                     "<br />vélos disponibles : ${available_bikes}" +
+                    "<br />points disponibles : ${available_bike_stands}" +
+                    "<br />points opérationnels : ${bike_stands}" +
                     "<br />CB : ${banking}" +
                     "<br /><i>Mise à jour : ${last_update:DateFormat}</i>"
                 );
@@ -102,14 +114,36 @@ define(["esri/map",
                 stationsGraphicLayer.infoTemplate = template;
                 map.addLayer(stationsGraphicLayer);
 
-                map.infoWindow.resize(200, 75);
+                infoWindow.startup();
+                map.infoWindow.resize(300, 200);
 
+                function showGeocoderLocation(evt) {
+                    map.graphics.clear();
+                    var point = evt.result.feature.geometry;
+                    var symbol = new SimpleMarkerSymbol().setStyle(
+                        SimpleMarkerSymbol.STYLE_SQUARE).setColor(
+                        new Color([255, 0, 0, 0.5])
+                    );
+                    var graphic = new Graphic(point, symbol);
+                    map.graphics.add(graphic);
+
+                    map.infoWindow.setTitle("Search Result");
+                    map.infoWindow.setContent(evt.result.name);
+                    map.infoWindow.show(evt.result.feature.geometry);
+                };
+
+                function removeGeocoderLocation() {
+                    map.infoWindow.hide();
+                    map.graphics.clear();
+                };
             },
+
             initView: function() {
                 on(dom.byId('contractsList'), 'change', this.selectContract);
                 on(dom.byId('locateimage'), 'click', this.locateDevice);
 
             },
+
             /**
              * Get JCDecaux contracts
              */
@@ -125,6 +159,7 @@ define(["esri/map",
                     }
                 });
             },
+
 
             /**
              * fired when a contract is selected
@@ -296,8 +331,7 @@ $.get(stations_url + contractName, function(data) {
                     }
                 }
 
-            },
-
+            }
 
 
 
