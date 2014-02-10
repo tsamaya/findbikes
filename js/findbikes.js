@@ -6,7 +6,8 @@ var map, symbol, handle, deviceGraphic, devicePt, watchId, shareLocation, statio
 var onImg = "./img/whereami_on.png";
 var offImg = "./img/whereami_off.png";
 
-define(["esri/map",
+define(["dojo/parser",
+        "esri/map",
         "esri/layers/ArcGISDynamicMapServiceLayer",
         "esri/InfoTemplate",
         "esri/dijit/InfoWindowLite",
@@ -25,7 +26,8 @@ define(["esri/map",
         "dojo/_base/Color",
         "dojo/domReady!"
     ],
-    function(Map,
+    function(parser,
+        Map,
         ArcGISDynamicMapServiceLayer,
         InfoTemplate,
         InfoWindowLite,
@@ -48,6 +50,9 @@ define(["esri/map",
              * startup function : entry point !
              */
             startup: function() {
+                // call the parser to create the dijit layout dijits
+                parser.parse();
+
                 // init map
                 this.initMap();
                 // init data
@@ -114,7 +119,7 @@ define(["esri/map",
                 stationsGraphicLayer = new GraphicsLayer();
                 stationsGraphicLayer.infoTemplate = template;
                 map.addLayer(stationsGraphicLayer);
-                
+
                 map.infoWindow.resize(300, 200);
 
                 function showGeocoderLocation(evt) {
@@ -242,7 +247,7 @@ $.get(stations_url + contractName, function(data) {
             locateDevice: function() {
                 if (!shareLocation) {
                     if (navigator.geolocation) {
-                        //$.mobile.showPageLoadingMsg();	
+                        //$.mobile.showPageLoadingMsg();    
                         //navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
                         // start watching position
                         watchId = navigator.geolocation.watchPosition(showLocation, locationError);
