@@ -78,6 +78,7 @@ define(["dojo/parser",
                     "yoffset": 0
                 });
 
+
                 // create the map
                 map = new Map("map", {
                     basemap: "streets",
@@ -86,61 +87,66 @@ define(["dojo/parser",
                     sliderStyle: "small"
                 });
 
-                // create the geocoder
-                var geocoder = new Geocoder({
-                    arcgisGeocoder: {
-                        placeholder: "Find a place"
-                    },
-                    autoComplete: true,
-                    map: map
-                }, dom.byId("search"));
-
-                geocoder.on("select", showGeocoderLocation);
-                geocoder.on("clear", removeGeocoderLocation);
-
                 // create the info window
                 var infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));
                 infoWindow.startup();
                 map.setInfoWindow(infoWindow);
+                
+                var updateEnd = map.on("update-end", function() {
+                    updateEnd.remove();
 
-                // with this template
-                var template = new InfoTemplate();
-                template.setTitle("<b>${name}</b>");
-                template.setContent("<b>${address}</b>" +
-                    "<br />Statut : ${status}" +
-                    "<br />vélos disponibles : ${available_bikes}" +
-                    "<br />points disponibles : ${available_bike_stands}" +
-                    "<br />points opérationnels : ${bike_stands}" +
-                    "<br />CB : ${banking}" +
-                    "<br /><i>Mise à jour : ${last_update:DateFormat}</i>"
-                );
+                    // create the geocoder
+                    var geocoder = new Geocoder({
+                        arcgisGeocoder: {
+                            placeholder: "Find a place"
+                        },
+                        autoComplete: true,
+                        map: map
+                    }, dom.byId("search"));
 
-                // Create graphics layer
-                stationsGraphicLayer = new GraphicsLayer();
-                stationsGraphicLayer.infoTemplate = template;
-                map.addLayer(stationsGraphicLayer);
+                    geocoder.on("select", showGeocoderLocation);
+                    geocoder.on("clear", removeGeocoderLocation);
 
-                map.infoWindow.resize(300, 200);
+                    geocoder.startup();
 
-                function showGeocoderLocation(evt) {
-                    map.graphics.clear();
-                    var point = evt.result.feature.geometry;
-                    var symbol = new SimpleMarkerSymbol().setStyle(
-                        SimpleMarkerSymbol.STYLE_SQUARE).setColor(
-                        new Color([255, 0, 0, 0.5])
+                    // with this template
+                    var template = new InfoTemplate();
+                    template.setTitle("<b>${name}</b>");
+                    template.setContent("<b>${address}</b>" +
+                        "<br />vélos disponibles : ${available_bikes}" +
+                        "<br />points disponibles : ${available_bike_stands}" +
+                        "<br />points opérationnels : ${bike_stands}" +
+                        //"<br />CB : ${banking}" +
+                        "<br />Statut : ${status}" +
+                        "<br /><i>Mise à jour : ${last_update:DateFormat}</i>"
                     );
-                    var graphic = new Graphic(point, symbol);
-                    map.graphics.add(graphic);
 
-                    map.infoWindow.setTitle("Search Result");
-                    map.infoWindow.setContent(evt.result.name);
-                    map.infoWindow.show(evt.result.feature.geometry);
-                };
+                    // Create graphics layer
+                    stationsGraphicLayer = new GraphicsLayer();
+                    stationsGraphicLayer.infoTemplate = template;
+                    map.addLayer(stationsGraphicLayer);
 
-                function removeGeocoderLocation() {
-                    map.infoWindow.hide();
-                    map.graphics.clear();
-                };
+                    function showGeocoderLocation(evt) {
+                        map.graphics.clear();
+                        var point = evt.result.feature.geometry;
+                        var symbol = new SimpleMarkerSymbol().setStyle(
+                            SimpleMarkerSymbol.STYLE_SQUARE).setColor(
+                            new Color([255, 0, 0, 0.5])
+                        );
+                        var graphic = new Graphic(point, symbol);
+                        map.graphics.add(graphic);
+
+                        map.infoWindow.setTitle("Search Result");
+                        map.infoWindow.setContent(evt.result.name);
+                        map.infoWindow.show(evt.result.feature.geometry);
+                    };
+
+                    function removeGeocoderLocation() {
+                        map.infoWindow.hide();
+                        map.graphics.clear();
+                    };
+                });
+
             },
 
             initView: function() {
@@ -191,10 +197,14 @@ define(["dojo/parser",
                             stationsGraphicLayer.add(new esri.Graphic(point, symbol, stations[i]));
                         }
                     }).done(function() {
+                        // to fix InfoWindow / check issue #1
+                        map.infoWindow.hide();
+                        map.graphics.clear();
+                        // end issue #1 fix
                         var data = [];
                         if (stationsGraphicLayer && stationsGraphicLayer.graphics && stationsGraphicLayer.graphics.length > 0) {
                             data = stationsGraphicLayer.graphics;
-                        }
+                        }                        
                         var zoomExtent = graphicsUtils.graphicsExtent(data);
                         map.setExtent(zoomExtent);
                     }).fail(function() {
@@ -206,34 +216,7 @@ define(["dojo/parser",
 
             },
 
-            /** 
-             * Get bike stations
-             */
 
-            /*
-getStations: function(contractName) {
-console.log("Chargement des stations du contrat " + contractName);
-$.get(stations_url + contractName, function(data) {
-    var stations = JSON.parse(data);
-    for (var i = 0, len = stations.length; i < len; i++) {
-        var point = new esri.geometry.Point(stations[i].position.lng, stations[i].position.lat);
-        //
-        map.graphics.add(new Graphic(point, symbol, stations[i]));
-        stationsGraphicLayer.add(new esri.Graphic(point, symbol, stations[i]));
-    }
-}).done(function() {
-    var data = [];
-    if (stationsGraphicLayer && stationsGraphicLayer.graphics && stationsGraphicLayer.graphics.length > 0) {
-        data = stationsGraphicLayer.graphics;
-    }
-    var zoomExtent = graphicsUtils.graphicsExtent(data);
-    map.setExtent(zoomExtent);
-}).fail(function() {
-    console.log("error loading stations");
-}).always(function() {
-    console.log("loading stations : finished!");
-});
-},*/
             /**
              * test evt wiring
              */
