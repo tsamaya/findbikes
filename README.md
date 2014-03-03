@@ -36,7 +36,7 @@ Try it : [Findbikes](http://gis.tsamaya.net/findbikes/).
 
 ## Resources
 
-* [API ArcGIS for Javascript](https://developer.JCDecaux.com/#/opendata/), for the map ;
+* [API ArcGIS for Javascript](http://js.arcgis.com/), for the map ;
 * [API de JCDecaux](https://developer.JCDecaux.com/), for self-services bicycles ;
 
 ## Licensing
