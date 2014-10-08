@@ -82,7 +82,7 @@ define(["dojo/parser",
                 // create the map
                 map = new Map("map", {
                     basemap: "streets",
-                    center: [2.3, 46.6], //long, lat un peu au centre de la France :)
+                    center: [2.3, 46.6], //long, lat near the center of France :)
                     zoom: 6,
                     sliderStyle: "small"
                 });
