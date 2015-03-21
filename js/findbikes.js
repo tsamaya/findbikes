@@ -81,7 +81,7 @@ define(["dojo/parser",
 
                 // create the map
                 map = new Map("map", {
-                    basemap: "streets",
+                    basemap: "topo",
                     center: [2.3, 46.6], //long, lat near the center of France :)
                     zoom: 6,
                     sliderStyle: "small"
@@ -91,7 +91,7 @@ define(["dojo/parser",
                 var infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));
                 infoWindow.startup();
                 map.setInfoWindow(infoWindow);
-                
+
                 var updateEnd = map.on("update-end", function() {
                     updateEnd.remove();
 
@@ -204,7 +204,7 @@ define(["dojo/parser",
                         var data = [];
                         if (stationsGraphicLayer && stationsGraphicLayer.graphics && stationsGraphicLayer.graphics.length > 0) {
                             data = stationsGraphicLayer.graphics;
-                        }                        
+                        }
                         var zoomExtent = graphicsUtils.graphicsExtent(data);
                         map.setExtent(zoomExtent);
                     }).fail(function() {
